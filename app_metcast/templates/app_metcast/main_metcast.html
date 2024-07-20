@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metcast</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/suggestions-jquery@22.6.0/dist/css/suggestions.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/suggestions-jquery@22.6.0/dist/js/jquery.suggestions.min.js"></script>
+</head>
+
+<body>
+    <h1>Прогноз погоды</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Получить</button>
+    </form>
+
+    {% if metcast_data %}
+        <p>Температура: {{metcast_data.current.temperature_2m|floatformat:0}}</p>
+    {% else %}
+        <p>Данные о погоде сейчас недоступны.</p>
+    {% endif %}
+    <script src="{% static 'app_metcast/scripts/suggestion.js' %}"></script>
+</body>
+
+</html>
